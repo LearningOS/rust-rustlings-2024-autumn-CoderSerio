@@ -18,11 +18,11 @@
 //
 // Execute `rustlings hint box1` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
-
+// Box 是一种智能指针，让我们直接在堆上分配内存，绕过栈内存的大小限制
+// 比如下面这个 List，可以看到它的 Cons 成员中还有 List，这就产生了递归，Rust 会认为在栈上无法存下，所以需要使用 Box 改到堆上
 #[derive(PartialEq, Debug)]
 pub enum List {
-    Cons(i32, List),
+    Cons(i32, Box<List>),
     Nil,
 }
 
@@ -35,11 +35,11 @@ fn main() {
 }
 
 pub fn create_empty_list() -> List {
-    todo!()
+    List::Nil
 }
 
 pub fn create_non_empty_list() -> List {
-    todo!()
+    List::Cons(123123, Box::new(List::Nil))
 }
 
 #[cfg(test)]
